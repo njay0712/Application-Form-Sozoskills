@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pre-Training Assessment - Sozo Skills</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .header h1 { font-size: 2.5em; margin-bottom: 5px; }
+        .header p { font-size: 1.1em; opacity: 0.9; }
+        .form-section { padding: 40px; }
+        .form-group {
+            margin-bottom: 25px;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #333;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1em;
+            resize: vertical;
+        }
+        .rating-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+            padding: 5px 0;
+            border-top: 1px dashed #eee;
+        }
+        .rating-group label {
+            font-weight: 400;
+            font-size: 1em;
+            margin-bottom: 0;
+        }
+        .rating-group select {
+            width: 150px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+        .required { color: #e74c3c; }
+        .btn-submit {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .btn-submit:hover {
+            transform: translateY(-2px);
+        }
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #667eea;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Pre-Training Assessment</h1>
+            <p>Please answer the following questions honestly to help us tailor our training.</p>
+        </div>
+
+        <div class="form-section">
+            <form id="assessmentForm">
+                <h2 style="color: #667eea; margin-bottom: 20px;">Section 1: Vocational Skills & Experience</h2>
+
+                <div class="form-group">
+                    <label for="technicalKnowledge">How would you rate your ability to quickly grasp technical procedures (e.g., following a recipe, understanding machine operation)? <span class="required">*</span></label>
+                    <select name="technicalKnowledge" required>
+                        <option value="">Select Rating (1-5)</option>
+                        <option value="1">1 - Very Low</option>
+                        <option value="2">2 - Below Average</option>
+                        <option value="3">3 - Average</option>
+                        <option value="4">4 - Good</option>
+                        <option value="5">5 - Excellent</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="toolsExperience">List any existing skills or experience you have with tools or equipment relevant to your chosen trade (e.g., mixing machine, coffee grinder, scissors, oven). <span class="required">*</span></label>
+                    <textarea name="toolsExperience" rows="3" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="existingSkills">Briefly describe any other existing skills you have that might be useful (e.g., cashier experience, customer service, cleaning, basic administration). <span class="required">*</span></label>
+                    <textarea name="existingSkills" rows="3" required></textarea>
+                </div>
+
+                <h2 style="color: #667eea; margin: 30px 0 20px;">Section 2: Soft Skills & Attitude (Ratings 1-5)</h2>
+
+                <div class="form-group">
+                    <label>Please rate your self-assessment on the following soft skills (1 = Needs Major Improvement, 5 = Excellent):</label>
+                    
+                    <div class="rating-group">
+                        <label for="followInstructions">Ability to follow verbal/written instructions precisely</label>
+                        <select name="followInstructions" required>
+                            <option value="">Select</option>
+                            <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option>
+                        </select>
+                    </div>
+
+                    <div class="rating-group">
+                        <label for="timeManagement">Time management and punctuality</label>
+                        <select name="timeManagement" required>
+                            <option value="">Select</option>
+                            <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option>
+                        </select>
+                    </div>
+
+                    <div class="rating-group">
+                        <label for="teamwork">Working effectively as part of a team</label>
+                        <select name="teamwork" required>
+                            <option value="">Select</option>
+                            <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option>
+                        </select>
+                    </div>
+
+                    <div class="rating-group">
+                        <label for="customerCommunication">Communication with customers/clients</label>
+                        <select name="customerCommunication" required>
+                            <option value="">Select</option>
+                            <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option>
+                        </select>
+                    </div>
+
+                    <div class="rating-group">
+                        <label for="askingHelp">Comfort asking for help when needed</label>
+                        <select name="askingHelp" required>
+                            <option value="">Select</option>
+                            <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="languages">What languages do you speak fluently?</label>
+                    <textarea name="languages" rows="2"></textarea>
+                </div>
+                
+                <h2 style="color: #667eea; margin: 30px 0 20px;">Section 3: Digital Literacy</h2>
+
+                <div class="form-group">
+                    <label for="smartphone">Do you own a functional smartphone (not shared)? <span class="required">*</span></label>
+                    <select name="smartphone" required>
+                        <option value="">Select</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="socialMedia">How comfortable are you using social media and WhatsApp for communication and learning? (1-5) <span class="required">*</span></label>
+                    <select name="socialMedia" required>
+                        <option value="">Select Rating (1-5)</option>
+                        <option value="1">1 - Not at all comfortable</option>
+                        <option value="2">2 - A little</option>
+                        <option value="3">3 - Moderately comfortable</option>
+                        <option value="4">4 - Very comfortable</option>
+                        <option value="5">5 - Expert/Daily user</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="computerUse">How often do you use a computer/laptop/tablet? <span class="required">*</span></label>
+                    <select name="computerUse" required>
+                        <option value="">Select Frequency</option>
+                        <option value="Never">Never</option>
+                        <option value="Rarely">Rarely (Less than once a month)</option>
+                        <option value="Occasionally">Occasionally (A few times a month)</option>
+                        <option value="Weekly">Weekly</option>
+                        <option value="Daily">Daily</option>
+                    </select>
+                </div>
+
+                <h2 style="color: #667eea; margin: 30px 0 20px;">Section 4: Motivation & Resilience</h2>
+
+                <div class="form-group">
+                    <label for="employmentImportance">How important is it for you to find formal employment after training? (1-5) <span class="required">*</span></label>
+                    <select name="employmentImportance" required>
+                        <option value="">Select Rating (1-5)</option>
+                        <option value="1">1 - Not very important</option>
+                        <option value="2">2</option>
+                        <option value="3">3 - Moderately important</option>
+                        <option value="4">4</option>
+                        <option value="5">5 - Extremely important</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="businessInterest">Are you interested in starting your own small business in this field one day? <span class="required">*</span></label>
+                    <select name="businessInterest" required>
+                        <option value="">Select</option>
+                        <option value="Yes">Yes</option>
+                        <option value="Maybe">Maybe, if the opportunity arises</option>
+                        <option value="No">No, I prefer to work for someone else</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="commitment">How committed are you to completing the entire training program? (1-5) <span class="required">*</span></label>
+                    <select name="commitment" required>
+                        <option value="">Select Rating (1-5)</option>
+                        <option value="1">1 - Low Commitment</option>
+                        <option value="2">2</option>
+                        <option value="3">3 - Moderate Commitment</option>
+                        <option value="4">4</option>
+                        <option value="5">5 - Fully Committed</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="goals">What are your main goals after completing the program (e.g., specific job, further studies)? <span class="required">*</span></label>
+                    <textarea name="goals" rows="3" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="challenges">What challenges do you anticipate during the training (e.g., transport, childcare, financial)? <span class="required">*</span></label>
+                    <textarea name="challenges" rows="3" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="supportNeeds">What kind of support will you need from us to succeed? (e.g., job readiness training, mentorship, counselling) <span class="required">*</span></label>
+                    <textarea name="supportNeeds" rows="3" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="familySupport">How supportive is your family/household of you attending this full-time program? <span class="required">*</span></label>
+                    <select name="familySupport" required>
+                        <option value="">Select Level of Support</option>
+                        <option value="Fully Supportive">Fully Supportive</option>
+                        <option value="Mostly Supportive">Mostly Supportive</option>
+                        <option value="Neutral">Neutral</option>
+                        <option value="Not Supportive">Not Supportive</option>
+                    </select>
+                </div>
+
+                <div class="loading" id="loadingMessage">
+                    <p>Submitting your assessment... Please wait.</p>
+                </div>
+
+                <button type="submit" class="btn-submit" id="submitBtn">Submit Assessment</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbza-SWD3mesiBfvMMvk6C0Wo3sodoRblpy_0odnH09EPA8qhdL3hd6A_vQU1UDt7mt3/exec';
+        const requiredID = sessionStorage.getItem('currentApplicationId');
+
+        // Safety check to ensure application data exists
+        if (!requiredID) {
+            alert("Error: Missing application ID. Please start from the application form.");
+            window.location.href = 'index.html'; 
+        }
+
+        document.getElementById('assessmentForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const submitBtn = document.getElementById('submitBtn');
+            const loadingMessage = document.getElementById('loadingMessage');
+
+            submitBtn.disabled = true;
+            loadingMessage.style.display = 'block';
+
+            const formData = new FormData(this);
+            const data = {
+                id: requiredID,
+                type: 'assessment',
+                submissionDate: new Date().toLocaleString(),
+                applicationStatus: 'Assessment Completed', // Update status
+                assessmentCompleted: 'YES' 
+            };
+            
+            let scoreSum = 0;
+            let scoreCount = 0;
+
+            formData.forEach((value, key) => {
+                data[key] = value;
+                // Calculate baseline score from 1-5 rating fields
+                if (['technicalKnowledge', 'followInstructions', 'timeManagement', 'teamwork', 'customerCommunication', 'askingHelp', 'socialMedia', 'employmentImportance', 'commitment'].includes(key)) {
+                    const score = parseInt(value);
+                    if (!isNaN(score)) {
+                        scoreSum += score;
+                        scoreCount++;
+                    }
+                }
+            });
+
+            const avgScore = scoreCount > 0 ? (scoreSum / scoreCount).toFixed(2) : 'N/A';
+            data.baselineScore = avgScore;
+
+            try {
+                const response = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    body: JSON.stringify(data),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const result = await response.json();
+
+                if (result.status === 'success') {
+                    // Update stored application data to include assessment details for thank you page
+                    let applicationData = JSON.parse(sessionStorage.getItem('applicationData'));
+                    if (applicationData) {
+                        Object.assign(applicationData, data);
+                        sessionStorage.setItem('applicationData', JSON.stringify(applicationData));
+                    }
+                    
+                    sessionStorage.removeItem('currentApplicationId');
+                    alert(`Assessment completed successfully! Your Baseline Score is: ${avgScore}/5.0`);
+                    window.location.href = 'thankyou.html'; // Redirect to the thank you page
+                } else {
+                    throw new Error(result.message || 'Submission failed');
+                }
+
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error submitting assessment. Please try again. Check your browser console for details.');
+                submitBtn.disabled = false;
+                loadingMessage.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
