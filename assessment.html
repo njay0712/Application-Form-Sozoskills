@@ -69,8 +69,8 @@
     <script>
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbza-SWD3mesiBfvMMvk6C0Wo3sodoRblpy_0odnH09EPA8qhdL3hd6A_vQU1UDt7mt3/exec';
         
-        // --- BYPASS RULE: If no ID found, generate a TEST ID so user is not blocked ---
         let appId = sessionStorage.getItem('currentApplicationId');
+        // Simple Rule: If no ID found (e.g. testing), just make one up so you aren't blocked.
         if (!appId) {
             appId = 'TEST-' + Date.now().toString().slice(-8);
             console.log("No ID found. Generated Test ID: " + appId);
@@ -96,13 +96,18 @@
             data.baselineScore = scoreCount > 0 ? (scoreSum / scoreCount).toFixed(2) : 'N/A';
 
             try {
-                const response = await fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(data), headers: { 'Content-Type': 'application/json' } });
+                // *** FIX: Use text/plain to avoid CORS Preflight error ***
+                const response = await fetch(SCRIPT_URL, { 
+                    method: 'POST', 
+                    body: JSON.stringify(data), 
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' } 
+                });
+                
                 const result = await response.json();
                 if (result.status === 'success') {
-                    // Update session storage for thank you page
                     let appData = JSON.parse(sessionStorage.getItem('applicationData')) || {};
                     Object.assign(appData, data);
-                    appData.id = appId; // Ensure ID is present
+                    appData.id = appId;
                     sessionStorage.setItem('applicationData', JSON.stringify(appData));
                     
                     window.location.href = 'thankyou.html';
